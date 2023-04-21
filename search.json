@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Monthly runoff LSTM",
+    "section": "",
+    "text": "This site contains information about the computational material used for the paper XXXYYY.\n\n\n\nTODO Get a better front page image…\n\n\nYou will find instructions to install the software environment and packages.\n\nAcknowledgements\nThis work is undertaken under the Digital Water and Landscape initiative in CSIRO Environment."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "getting-set-up.html",
+    "href": "getting-set-up.html",
+    "title": "Getting set up",
+    "section": "",
+    "text": "This document outlines the steps to create an environment suitable to run the material in this repository."
+  },
+  {
+    "objectID": "getting-set-up.html#conda-environment",
+    "href": "getting-set-up.html#conda-environment",
+    "title": "Getting set up",
+    "section": "conda environment",
+    "text": "conda environment\nThere are various options to set up a suotable python environment to run . This document outlines using conda. If you do not have any preexisting environments, we recommend you use mambaforge.\nThis document assumes you start from the base environment, for instance in the “Anaconda/miniconda prompt”:\nxxxyyy@machine:~$ mamba env list\n# conda environments:\n#\nbase                     /home/xxxyyy/mambaforge\nWe recommend you use the mamba command, a newer drop-in replacement for conda. This is optional. In an existing conda environment you can do conda install -c conda-forge mamba. Mambaforge comes already with mamba, of course.\nTo set up a new conda environment usable as a kernel by the notebook(s) in this repository, you may use the following environment specification."
+  },
+  {
+    "objectID": "getting-set-up.html#c-compiler",
+    "href": "getting-set-up.html#c-compiler",
+    "title": "Getting set up",
+    "section": "C++ compiler",
+    "text": "C++ compiler\nWe use the hydrodiy package as a dependency. On Windows you will need a Microsoft Visual C++ compiler 14.0 or greater installed. If you have MS Visual Studio 2015 or newer with C++ options installed, this should work. If you do not have Visual Studio, there are various options to install the C++ build tools from the Visual Studio Download page. You do not need to install the full Visual Studio installation, we just need command line build tools including C++ compiler.\nOn other platforms than Windows, typically you can very easily install the GNU g++ compiler and it is usually available by default."
+  },
+  {
+    "objectID": "getting-set-up.html#on-windows",
+    "href": "getting-set-up.html#on-windows",
+    "title": "Getting set up",
+    "section": "On Windows:",
+    "text": "On Windows:\n:: from within your \"(base)\" conda environment\n:: You can call your environment as you wish, it need not be ozrr:\nset my_env_name=ozrr\ncd c:\\src\\monthly-lstm-runoff\\ozrr\\configs\n:: if you have mamba installed in your base environment:\nwhere mamba\nmamba env create -n %my_env_name% -f ./environment.yml\n:: otherwise use the significantly slower\n:: conda env create -n %my_env_name% -f ./environment.yml\n:: may take quite some time...\nIf you see a Failed to build hydrodiy warning and error, see the Troubleshooting section below"
+  },
+  {
+    "objectID": "getting-set-up.html#on-linux",
+    "href": "getting-set-up.html#on-linux",
+    "title": "Getting set up",
+    "section": "On Linux:",
+    "text": "On Linux:\n# from within your \"(base)\" conda environment\n# You can call your environment as you wish, it need not be ozrr:\nmy_env_name=ozrr\ncd ~/src/monthly-lstm-runoff/ozrr/configs\n# if you have mamba installed in your base environment:\nwhich mamba\nmamba env create -n $my_env_name -f ./environment.yml\n# otherwise use the significantly slower\n# conda env create -n $my_env_name -f ./environment.yml\n# may take quite some time...\nIf you see a Failed to build hydrodiy warning and error, see the Troubleshooting section below"
+  },
+  {
+    "objectID": "getting-set-up.html#troubleshooting",
+    "href": "getting-set-up.html#troubleshooting",
+    "title": "Getting set up",
+    "section": "Troubleshooting",
+    "text": "Troubleshooting\nWith the environment.yml file we crafted you should not have trouble with the above instructions. One issue previously encountered is documented for the record only.\nIf you see an error such as the following output when creating the environment, some of our packages may have failed to install:\nFailed to build hydrodiy\n\nPip subprocess error:\n  Running command git clone --filter=blob:none --quiet https://bitbucket.org/jm75/hydrodiy /tmp/pip-install-9tsb5jcx/hydrodiy_3a3aa800601f4d0aa85302bc962faa5c\n  WARNING: Built wheel for hydrodiy is invalid: Metadata 1.2 mandates PEP 440 version, but '.2.2-251.ge446bfa' is not\nERROR: Could not build wheels for hydrodiy, which is required to install pyproject.toml-based projects\n\nfailed\n\nCondaEnvException: Pip failed\nThis can happen depending on how a specified source in the conda environment.yml for a package retrieved from git. git describe may return something like v.2.2-289-g9e84708 which creates issues.\nThe newly created environment should contain two packages added from source: mamba activate ozrr and mamba list | grep pypi lists:\nhydrodiy                  2.2.1                    pypi_0    pypi\nozrr-data                 0.5                      pypi_0    pypi\nIf these are missing, you can work around this installing ozrr-data and hydrodiy for instance like so:\nconda activate $my_env_name\ncd ~/src/ozrr-data/\npip install -e ."
+  },
+  {
+    "objectID": "getting-set-up.html#wapaba",
+    "href": "getting-set-up.html#wapaba",
+    "title": "Getting set up",
+    "section": "WAPABA",
+    "text": "WAPABA\nThis section is optional\nSimulation for the WAPABA model were done using a larger system known as swift2. This software in not entirely open source, but a binary installation can be made available on demand via email.\nFollow the swift installation instructions.\nIf installing python packages from source, all packages installed in develop mode:\ncd ~/src/pyrefcount\npip install -e .\ncd ~/src/c-interop/bindings/python/cinterop\npip install -e .\ncd ~/src/datatypes/bindings/python/uchronia\npip install -e .\ncd ~/src/swift/bindings/python/swift2/\npip install -e ."
+  },
+  {
+    "objectID": "getting-set-up.html#ozrr-package",
+    "href": "getting-set-up.html#ozrr-package",
+    "title": "Getting set up",
+    "section": "ozrr package",
+    "text": "ozrr package\ncd ~/src/monthly-lstm-runoff\npip install -e ozrr/"
+  }
+]
