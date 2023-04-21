@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/index.html</loc>
-    <lastmod>2023-04-21T06:28:01.878Z</lastmod>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/index.html</loc>
+    <lastmod>2023-04-21T06:33:28.612Z</lastmod>
   </url>
   <url>
-    <loc>https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/about.html</loc>
-    <lastmod>2023-04-21T06:28:02.086Z</lastmod>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/about.html</loc>
+    <lastmod>2023-04-21T06:33:28.824Z</lastmod>
   </url>
   <url>
-    <loc>https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/getting-set-up.html</loc>
-    <lastmod>2023-04-21T06:28:02.478Z</lastmod>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/getting-set-up.html</loc>
+    <lastmod>2023-04-21T06:33:29.228Z</lastmod>
   </url>
 </urlset>
