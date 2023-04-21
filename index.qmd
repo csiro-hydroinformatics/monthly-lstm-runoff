@@ -1,0 +1,14 @@
+---
+title: "Monthly runoff LSTM"
+---
+
+This site contains information about the computational material used for the paper [XXXYYY](https://doi.org).
+
+![TODO Get a better front page image...](./img/front-page-img.png)
+
+You will find instructions to install the software environment and packages.
+
+# Acknowledgements
+
+This work is undertaken under the **Digital Water and Landscape** initiative in [CSIRO Environment](https://www.csiro.au/en/about/people/business-units/environment).
+

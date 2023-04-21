@@ -1,0 +1,39 @@
+project:
+  type: website
+
+website:
+  title: "Monthly runoff LSTM"
+  site-url: https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/
+  # favicon: ./img/favicon.png  
+  # image: ./img/favicon.png  
+
+  page-footer: 
+    right: "This page is built with [Quarto](https://quarto.org/)"
+    left: "&copy; CC-By CSIRO"
+
+  navbar:
+    # logo: ./img/favicon.png
+    href: https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/
+    title: false
+    collapse-below: lg
+    left:
+      - href: index.qmd
+        text: Home
+      # - about.qmd
+      - text: "Installation"
+        href: getting-set-up.qmd
+
+format:
+  html:
+    theme:
+      light: cosmo
+      dark: darkly
+    css: styles.css
+    highlight-style: breeze
+    toc: true
+    toc-title: Contents
+    toc-location: right
+
+
+
+

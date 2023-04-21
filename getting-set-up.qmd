@@ -1,0 +1,189 @@
+---
+title: "Getting set up"
+---
+
+This document outlines the steps to create an environment suitable to run the material in this repository. 
+
+# Prerequisites
+
+## conda environment
+
+There are various options to set up a suotable python environment to run . This document outlines using conda. If you do not have any preexisting environments, we recommend you use [mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
+
+This document assumes you start from the base environment, for instance in the "Anaconda/miniconda prompt":
+
+```text
+xxxyyy@machine:~$ mamba env list
+# conda environments:
+#
+base                     /home/xxxyyy/mambaforge
+```
+
+We recommend you use the `mamba` command, a newer drop-in replacement for `conda`. This is optional. In an existing conda environment you can do `conda install -c conda-forge mamba`. Mambaforge comes already with mamba, of course.
+
+To set up a new conda environment usable as a kernel by the notebook(s) in this repository, you may use the following environment specification.
+
+## C++ compiler
+
+We use the [**hydrodiy**](https://bitbucket.org/jlerat/hydrodiy/) package as a dependency. On _Windows_ you will need a Microsoft Visual C++ compiler 14.0 or greater installed. If you have MS Visual Studio 2015 or newer with C++ options installed, this should work. If you do not have Visual Studio, there are various options to install the C++ build tools from the [Visual Studio Download page](https://visualstudio.microsoft.com/downloads/). You do not need to install the full Visual Studio installation, we just need command line build tools including C++ compiler.
+
+On other platforms than Windows, typically you can very easily install the GNU `g++` compiler and it is usually available by default.
+
+# Creating the conda environment
+
+**NOTE**: you should only use the `conda env create` (resp. `mamba env create`) command from the conda base environment. Creating it from within an already existing environment will create a nested environment, which may have its uses but is confusing.
+
+**NOTE**: The environment includes `tensorflow` packages. Expect around 1/2 GB download.
+
+## On Windows:
+
+```bat
+:: from within your "(base)" conda environment
+:: You can call your environment as you wish, it need not be ozrr:
+set my_env_name=ozrr
+cd c:\src\monthly-lstm-runoff\ozrr\configs
+:: if you have mamba installed in your base environment:
+where mamba
+mamba env create -n %my_env_name% -f ./environment.yml
+:: otherwise use the significantly slower
+:: conda env create -n %my_env_name% -f ./environment.yml
+:: may take quite some time...
+```
+
+If you see a `Failed to build hydrodiy` warning and error, see the Troubleshooting section below
+
+
+## On Linux:
+
+```sh
+# from within your "(base)" conda environment
+# You can call your environment as you wish, it need not be ozrr:
+my_env_name=ozrr
+cd ~/src/monthly-lstm-runoff/ozrr/configs
+# if you have mamba installed in your base environment:
+which mamba
+mamba env create -n $my_env_name -f ./environment.yml
+# otherwise use the significantly slower
+# conda env create -n $my_env_name -f ./environment.yml
+# may take quite some time...
+```
+
+If you see a `Failed to build hydrodiy` warning and error, see the Troubleshooting section below
+
+## Troubleshooting
+
+With the `environment.yml` file we crafted you should not have trouble with the above instructions. One issue previously encountered is documented for the record only.
+
+If you see an error such as the following output when creating the environment, some of our packages may have failed to install:
+
+```text
+Failed to build hydrodiy
+
+Pip subprocess error:
+  Running command git clone --filter=blob:none --quiet https://bitbucket.org/jm75/hydrodiy /tmp/pip-install-9tsb5jcx/hydrodiy_3a3aa800601f4d0aa85302bc962faa5c
+  WARNING: Built wheel for hydrodiy is invalid: Metadata 1.2 mandates PEP 440 version, but '.2.2-251.ge446bfa' is not
+ERROR: Could not build wheels for hydrodiy, which is required to install pyproject.toml-based projects
+
+failed
+
+CondaEnvException: Pip failed
+```
+
+This can happen depending on how a specified source in the conda `environment.yml` for a package retrieved from git. `git describe` may return something like `v.2.2-289-g9e84708` which creates issues.
+
+The newly created environment should contain two packages added from source:  `mamba activate ozrr` and `mamba list | grep pypi` lists:
+
+```text
+hydrodiy                  2.2.1                    pypi_0    pypi
+ozrr-data                 0.5                      pypi_0    pypi
+```
+
+If these are missing, you can work around this installing [ozrr-data](https://github.com/csiro-hydroinformatics/ozrr-data) and [hydrodiy](https://bitbucket.org/jlerat/hydrodiy/) for instance like so:
+
+```sh
+conda activate $my_env_name
+cd ~/src/ozrr-data/
+pip install -e .
+```
+
+## WAPABA
+
+**This section is optional**
+
+Simulation for the WAPABA model were done using a larger system known as [swift2](https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/). This software in not entirely open source, but a binary installation can be made available on demand via email.
+
+Follow the [swift installation instructions](https://csiro-hydroinformatics.github.io/streamflow-forecasting-tools-onboard/installation.html).
+
+If installing python packages from source, all packages installed in `develop` mode:
+
+```sh
+cd ~/src/pyrefcount
+pip install -e .
+cd ~/src/c-interop/bindings/python/cinterop
+pip install -e .
+cd ~/src/datatypes/bindings/python/uchronia
+pip install -e .
+cd ~/src/swift/bindings/python/swift2/
+pip install -e .
+```
+
+## ozrr package
+
+```sh
+cd ~/src/monthly-lstm-runoff
+pip install -e ozrr/
+```
+
+# Jupyter kernel
+
+To run the notebooks you need to register the newly created conda environment as a kernel usable from Jupyter.
+
+```sh
+conda activate $my_env_name # if not already...
+python -m ipykernel install --user --name ozrr --display-name "DWL RR"
+```
+
+On Linux laptops do not forget that you may need to specify optirun to access the GPU (if needed). That said, the RNN architecture such as LSTM do not appear to benefit from training on GPU over CPU, at least the way we do this for the paper, so this is entirely optional. 
+
+A file such as `~/.local/share/jupyter/kernels/ozrr/kernel.json` would contain the following. 
+
+```json
+{
+ "argv": [
+  "optirun",
+  "/home/xxxyyy/mambaforge/envs/ozrr/bin/python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "env": {"LD_LIBRARY_PATH":"/home/xxxyyy/mambaforge/envs/ozrr/lib/"},
+ "display_name": "DWL RR",
+ "language": "python",
+ "metadata": {
+  "debugger": true
+ }
+}
+```
+
+You may already have jupyter-lab installed in another environment. If not, you may want to install it in your new environment:
+
+```sh
+conda activate $my_env_name
+mamba install -c conda-forge jupyterlab
+```
+
+# Discovery dashboard
+
+**This step is optional**
+
+One notebook (dashboard) uses ipyleaflet for interactive map-based display of catchment data. This can be fiddly to set up; the following should work but having it then working from your jupyterlab application can be a hit and miss affair.
+
+```sh
+conda activate $my_env_name
+conda install -c conda-forge ipywidgets ipyleaflet
+pip install git+https://github.com/jmp75/ipyleaflet-dashboard-tools@main#egg=ipyleaflet-dashboard-tools
+pip install jupyter-flex # Dashboarding tool
+```
+
+
