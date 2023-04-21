@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Monthly runoff LSTM",
     "section": "",
-    "text": "This site contains information about the computational material used for the paper XXXYYY.\n\n\n\nTODO Get a better front page image…\n\n\nYou will find instructions to install the software environment and packages.\n\nAcknowledgements\nThis work is undertaken under the Digital Water and Landscape initiative in CSIRO Environment."
+    "text": "This site contains information about the computational material used for the paper Deep learning for monthly rainfall-runoff modelling: a comparison with classical rainfall-runoff modelling across Australia.\n\n\n\nTODO Get a better front page image…\n\n\nYou will find instructions to install the software environment and packages. And possibly a few sample workflows.\nThe DOI for this web site (not the DOI of the paper!) is \n\nAcknowledgements\nThis work is undertaken under the Digital Water and Landscape initiative in CSIRO Environment."
   },
   {
     "objectID": "about.html",
