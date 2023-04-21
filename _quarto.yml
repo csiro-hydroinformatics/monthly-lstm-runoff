@@ -22,6 +22,28 @@ website:
       # - about.qmd
       - text: "Installation"
         href: getting-set-up.qmd
+    right:
+      - icon: github
+        href: https://github.com/csiro-hydroinformatics/monthly-lstm-runoff
+      # - icon: twitter
+      #   href: https://twitter.com/openscapes
+
+
+  # sidebar:
+    # - id: home
+      # title: "Home"
+      # style: "floating"
+      # collapse-level: 2
+      # align: left
+      # contents:
+        # - index.qmd
+    # - id: installation
+      # title: "Installation"
+      # style: "floating"
+      # collapse-level: 2
+      # align: left
+      # contents:
+        # - getting-set-up.qmd
 
 format:
   html:
