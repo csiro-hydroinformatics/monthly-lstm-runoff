@@ -1,0 +1,9 @@
+pandas
+numpy
+xarray
+scipy # to have netcdf read/write to save xarrays, but actually netcdf4 is less buggy:
+netcdf4
+tensorflow
+ozrr-data # https://github.com/csiro-hydroinformatics/ozrr-data
+cython
+hydrodiy # https://bitbucket.org/jlerat/hydrodiy/ , fork https://bitbucket.org/jm75/hydrodiy 
