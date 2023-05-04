@@ -11,7 +11,7 @@
     "href": "index.html",
     "title": "Monthly runoff LSTM",
     "section": "",
-    "text": "This site contains information about the computational material used for the paper Deep learning for monthly rainfall-runoff modelling: a comparison with classical rainfall-runoff modelling across Australia.\n\n\n\nExploratory dashboard for model comparison\n\n\nYou will find instructions to install the software environment and packages.\n\n\nAcknowledgements\nThis work is undertaken under the Digital Water and Landscape initiative in CSIRO Environment."
+    "text": "This site contains information about the computational material used for the paper Deep learning for monthly rainfall-runoff modelling: a comparison with classical rainfall-runoff modelling across Australia.\n\n\n\nExploratory dashboard for model comparison\n\n\nYou will find instructions to install the software environment and packages.\n\n\nAcknowledgements\nThis work is undertaken under the Digital Water and Landscape initiative in CSIRO Environment.\nContributions to this codebase by Peter Fitch and Jean-Michel Perraud. Conceptual inputs from Julien Lerat and Stephanie Clark."
   },
   {
     "objectID": "documentation.html",
