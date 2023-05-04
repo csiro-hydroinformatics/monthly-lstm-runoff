@@ -8,7 +8,7 @@ This document outlines the steps to create an environment suitable to run the ma
 
 ## conda environment
 
-There are various options to set up a suotable python environment to run . This document outlines using conda. If you do not have any preexisting environments, we recommend you use [mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
+There are various options to set up a suitable python environment to run . This document outlines using conda. If you do not have any preexisting environments, we recommend you use [mambaforge](https://github.com/conda-forge/miniforge#mambaforge).
 
 This document assumes you start from the base environment, for instance in the "Anaconda/miniconda prompt":
 

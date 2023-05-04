@@ -4,11 +4,11 @@ title: "Monthly runoff LSTM"
 
 This site contains information about the computational material used for the paper [Deep learning for monthly rainfall-runoff modelling: a comparison with classical rainfall-runoff modelling across Australia](https://doi.org).
 
-![TODO Get a better front page image...](./img/front-page-img.png)
+![Exploratory dashboard for model comparison](./img/model_benchmarking_dashboard_output.png)
 
-You will find instructions to [install the software environment and packages](./getting-set-up.qmd). And possibly a few sample workflows.
+You will find instructions to [install the software environment and packages](./getting-set-up.qmd).
 
-The DOI for this web site (not the DOI of the paper!) is [![DOI](https://zenodo.org/badge/630693716.svg)](https://zenodo.org/badge/latestdoi/630693716)
+<!-- The DOI for this web site (not the DOI of the paper!) is [![DOI](https://zenodo.org/badge/630693716.svg)](https://zenodo.org/badge/latestdoi/630693716) -->
 
 # Acknowledgements
 

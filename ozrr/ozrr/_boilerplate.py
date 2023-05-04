@@ -1,21 +1,22 @@
 """A place to gather code that otherwise tends to repeat itself in exploratory notebooks 
 """
 
-
 from pathlib import Path
-
 import pandas as pd
-
+import os
 
 # TODO
 # These were convenient to reduce entropy early on.
 # Needs adaptation for third parties
 # Revise when porting notebooks for a larger audience.
-import os
-_PATH_SHARED_DRIVE = os.environ["PATH_SHARED_DRIVE"]
-_PATH_LOCAL_DIR = os.environ["PATH_LOCAL_DIR"]
-_PATH_SHARED_MACHINE = os.environ["PATH_SHARED_MACHINE"]
 
+_PATH_SHARED_DRIVE = "/not_found"
+_PATH_LOCAL_DIR = "/not_found"
+_PATH_SHARED_MACHINE = "/not_found"
+
+if "OZRR_PATH_SHARED_DRIVE" in os.environ: _PATH_SHARED_DRIVE = os.environ["OZRR_PATH_SHARED_DRIVE"]
+if "OZRR_PATH_LOCAL_DIR" in os.environ: _PATH_LOCAL_DIR = os.environ["OZRR_PATH_LOCAL_DIR"]
+if "OZRR_PATH_SHARED_MACHINE" in os.environ: _PATH_SHARED_MACHINE = os.environ["OZRR_PATH_SHARED_MACHINE"]
 
 def create_trainer(data_repo, station_id, out_dir=None):
     from ozrr.tfmodels import CatchmentTraining, checked_mkdir, mk_model_filename, lstm_single, OUT_MODELS_DIRNAME

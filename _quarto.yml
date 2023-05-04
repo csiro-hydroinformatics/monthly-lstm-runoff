@@ -22,6 +22,8 @@ website:
       # - about.qmd
       - text: "Installation"
         href: getting-set-up.qmd
+      - text: "Sample workflows"
+        href: documentation.qmd
     right:
       - icon: github
         href: https://github.com/csiro-hydroinformatics/monthly-lstm-runoff
@@ -29,21 +31,24 @@ website:
       #   href: https://twitter.com/openscapes
 
 
-  # sidebar:
-    # - id: home
-      # title: "Home"
-      # style: "floating"
-      # collapse-level: 2
-      # align: left
-      # contents:
-        # - index.qmd
-    # - id: installation
-      # title: "Installation"
-      # style: "floating"
-      # collapse-level: 2
-      # align: left
-      # contents:
-        # - getting-set-up.qmd
+  sidebar:
+    - id: installation
+      title: "Installation"
+      style: "floating"
+      collapse-level: 2
+      align: left
+      contents:
+        - getting-set-up.qmd
+    - id: documentation
+      title: "Sample workflows"
+      style: "floating"
+      collapse-level: 1
+      align: left
+      contents:
+        - documentation.qmd
+        - section: "Examples"
+          contents:
+            - ./notebooks/tf_models.ipynb
 
 format:
   html:
