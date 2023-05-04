@@ -14,3 +14,5 @@ You will find instructions to [install the software environment and packages](./
 
 This work is undertaken under the **Digital Water and Landscape** initiative in [CSIRO Environment](https://www.csiro.au/en/about/people/business-units/environment).
 
+Contributions to this codebase by Peter Fitch and Jean-Michel Perraud. Conceptual inputs from Julien Lerat and Stephanie Clark.
+
