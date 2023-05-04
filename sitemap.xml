@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/notebooks/tf_models.html</loc>
+    <lastmod>2023-05-04T00:54:49.518Z</lastmod>
+  </url>
+  <url>
     <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/index.html</loc>
-    <lastmod>2023-04-21T08:06:19.100Z</lastmod>
+    <lastmod>2023-05-04T00:54:49.726Z</lastmod>
+  </url>
+  <url>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/documentation.html</loc>
+    <lastmod>2023-05-04T00:54:49.930Z</lastmod>
   </url>
   <url>
     <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/about.html</loc>
-    <lastmod>2023-04-21T08:06:19.336Z</lastmod>
+    <lastmod>2023-05-04T00:54:50.150Z</lastmod>
   </url>
   <url>
     <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/getting-set-up.html</loc>
-    <lastmod>2023-04-21T08:06:19.740Z</lastmod>
+    <lastmod>2023-05-04T00:54:50.538Z</lastmod>
+  </url>
+  <url>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/ozrr/docs/tech_notes.html</loc>
+    <lastmod>2023-05-04T00:54:50.890Z</lastmod>
+  </url>
+  <url>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/ozrr/docs/index.html</loc>
+    <lastmod>2023-05-04T00:54:51.230Z</lastmod>
+  </url>
+  <url>
+    <loc>https://csiro-hydroinformatics.github.io/monthly-lstm-runoff/ozrr/docs/code-reference.html</loc>
+    <lastmod>2023-05-04T00:54:51.458Z</lastmod>
   </url>
 </urlset>
