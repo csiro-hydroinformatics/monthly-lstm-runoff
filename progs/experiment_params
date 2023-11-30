@@ -1,0 +1,36 @@
+top_out_dir_f=/datasets/work/path/to/my/workdir/data/ozdata_hrs_out/
+
+if [ ! -e ${top_out_dir_f} ]; then
+    echo "FAILED: top output directory not found: $top_out_dir_f";
+    echo "Creation of the top output folder is deliberately manual, one-off";
+    return 1;
+fi
+
+tstamp=2022-10-23T15_novalid
+
+model_id=lstm_single
+# model_id=cn_parallel_lstm
+# model_id=lstm_enc_dec
+
+out_dir_f=${top_out_dir_f}/${tstamp}/${model_id}
+mkdir -p ${out_dir_f}
+
+n_epochs=100
+train_start_date=1950-01-01
+train_end_date=1995-12-31
+eval_start_date=1996-01-01
+eval_end_date=2020-07-15
+batch_size=24
+seq_length=6
+num_features=4
+steps_per_epoch=400
+stride=1
+lstm_dim=10
+
+logging=false # false (default), tensorboard, wandb
+log_dir=ignored # directory for log output
+use_validation=false # Should there be a training/validation split of the calibration period to prevent model overfitting. Was investigated when suspecting overfitting, but it may actually have been a red herring. 
+
+early_stopping=true
+early_stopping_patience=5
+

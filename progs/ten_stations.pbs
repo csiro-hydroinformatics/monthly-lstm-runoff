@@ -1,0 +1,50 @@
+#!/bin/bash
+#SBATCH --job-name=lstm_single
+#SBATCH --nodes=1
+# On my 16 core machine for lstm I can run ~6 tasks in parallel; more than that and marginal use rate seems to decrease (at 12 stilll not 100%)
+# note however than the level of parallelism for cnn and encoder/decoder seems higher, so should request less parallelism.
+#SBATCH --ntasks=32
+#SBATCH --ntasks-per-node=32
+# do not request --exclusive for now, even if it could make sense
+#SBATCH --time=06:00:00
+## I observe a memory footprint of ~2.5 gigs per task, so with a small safety buffer
+#SBATCH --mem=60GB
+# trying to down the time and memory requirements. Monitor after and iterate.
+
+module load parallel
+
+env_name=ozrr_mycluster
+work_dir=/datasets/work/path/to/my/workdir
+src_dir=${work_dir}/src_pub
+prog_dir=${src_dir}/monthly-lstm-runoff/progs
+
+. ${prog_dir}/small_selected_stations
+
+parameter_file=${prog_dir}/small_experiment_params
+
+if [ ! -e ${parameter_file} ]; then
+    echo "FAILED: file not found: $parameter_file";
+    return 1;
+fi
+
+my_prog="${prog_dir}/train_station.sh ${parameter_file}"
+
+start_time=`date`
+
+slurm_npar=13
+parallel -P $slurm_npar srun -n1 --exclusive ${my_prog} ::: ${stations[@]}
+# parallel -P $SLURM_NTASKS srun -n1 --exclusive ${my_prog} ::: ${stations[@]}
+# srun -n8 --exclusive echo python ${my_prog} --datadir ${root_dir_f} --outdir ${out_dir_f} --n_epochs ${n_epochs} ${stations[$SLURM_ARRAY_TASK_ID]}
+
+end_time=`date`
+
+echo ####################################################################
+echo "Job execution walltime: started: ${start_time} finished: ${end_time}"
+echo ####################################################################
+
+# Log the parameters of the 
+. ${parameter_file}
+
+mkdir -p ${out_dir_f}
+cp ${parameter_file} ${out_dir_f}/experiment_parameters
+

@@ -1,0 +1,159 @@
+---
+title: "Batch LSTM calibration on cluster"
+---
+
+> Steps to perform batch model fitting on a Linux compute cluster
+
+This document outlines the steps to create an environment suitable to run the material in this repository. 
+
+# Prerequisites
+
+::: {.callout-tip}
+
+**Note to self**: consider adapting [Slurm Cluster with Docker](https://medium.com/analytics-vidhya/slurm-cluster-with-docker-9f242deee601) for an executable docker image. Or another image on dockerhub.
+
+::: 
+
+
+## Hardware
+
+Note that for our case, GPU hardware does not appear to offer any benefit in calibrating point temporal models, so we are using a CPU cluster to perform batch calibrations of the deep learning based, LSTM rainfall-runoff models.
+
+After a few trial and error iterations, on our infrastructure, it appears that creating a python virtual environment from scratch with Tensorflow is the best solution on our infrastructure (rather than predefined ones managed by our IT department).
+
+## Testing the command line programs locally
+
+Before launching a cluster task that fails, test the command line operations underpining the batch calibration on a local computer. This assumes that you have a working environment as per the document [Getting set up](./getting-set-up.qmd).
+
+```sh
+prog_dir=${HOME}/src/monthly-lstm-runoff/progs
+cd $prog_dir
+parameter_file=${prog_dir}/test_params
+my_prog="${prog_dir}/train_station_test.sh ${parameter_file}"
+$my_prog 410008
+```
+
+# Setting up a `venv` on the cluster
+
+```sh
+umask 022
+
+env_name=ozrr_mycluster
+work_dir=/datasets/work/path/to/my/workdir
+venv_dir=${work_dir}/venv/${env_name}
+src_dir=${work_dir}/src_pub
+
+# One off, xxxyyy:
+mkdir -p ${venv_dir}
+mkdir -p ${src_dir}
+
+cd ${src_dir}
+
+module load python/3.9.4
+# we use `python3` rather than python because depending on platform, not always equivalent. Some still have python pointing to python 2.7, so better be safe
+which python3
+```
+
+## Creation of the new venv
+
+Reproducibility notes for self (xxxyyy): **Most readers can ignore this section and to the next section (batch calibrations)**
+
+```sh
+# CAUTION: delete a venv with:
+# rm -rf ${venv_dir}
+
+umask 022
+python3 -m venv ${venv_dir}
+
+eval `ssh-agent -s`
+ssh-add # Assuming you have an ssh key set up.
+cd ${src_dir}
+git clone git@github.com:csiro-hydroinformatics/monthly-lstm-runoff.git
+git clone git@github.com:csiro-hydroinformatics/ozrr-data.git
+
+source ${venv_dir}/bin/activate
+
+pip install --upgrade pip
+pip install geopandas pandas xarray  scipy  geopandas  Cython  requests  pillow  matplotlib cffi numpy jsonpickle netcdf4 scikit-learn
+pip install tensorflow
+
+
+# We will install the packages in 'develop' mode to facilitate ongoing work, as the code is likely to evolve continuously.
+cd ${src_dir}/ozrr_data
+python3 setup.py develop --no-deps
+cd ${src_dir}/monthly-lstm-runoff/ozrr
+python3 setup.py develop --no-deps
+```
+
+If needed to update our code:
+
+```sh
+# if not yet done:
+umask 022
+eval `ssh-agent -s`
+ssh-add
+
+# cd ${src_dir}/camels-aus-py
+# git pull
+# cd ${src_dir}/rr-ml/pkg/etu
+# python3 setup.py develop --no-deps
+cd ${src_dir}/monthly-lstm-runoff
+git fetch --all
+git pull
+# idem for other repos 
+```
+
+# Batch calibrations
+
+```sh
+# source ${venv_dir}/bin/activate
+cd ${src_dir}/monthly-lstm-runoff/progs
+```
+
+In order to facilitate deep learning calibration from the command line, and on a cluster, a program `train_tf.py` was written
+
+```sh
+my_prog=${src_dir}/monthly-lstm-runoff/progs/train_tf.py
+python3 ${my_prog} --help
+```
+
+Note that the first time you run `python3 ${my_prog} --help` from a newly created environment, it may take a few seconds to complete while python is byte-compiled.
+
+This program is the basic building block for calibrating hundreds of catchments with varying hyperparameters and other options.
+
+Batch training tasks are defined in "slurm job files" such as [../progs/batch_tf.pbs](../progs/batch_tf.pbs). The parameters of the experiements are loaded by this job file from a file, e.g. [../progs/experiment_params](../progs/experiment_params).
+
+```sh
+# source ${venv_dir}/bin/activate
+cd ${src_dir}/monthly-lstm-runoff/progs
+sbatch -o slurm/test.out ten_stations.pbs
+```
+
+Admitedly there remains a bit of code redundancies between job files, but this is for now a pragmatic approach.
+
+```sh
+for f in 20230125_2 20230125_all 20230125_rain_pet_tmax_eff_rain 20230125_rain_pet_rainsur 20230125_rain_pet_eff_rain ; do
+   sbatch -o slurm/${f}.out ${f}.pbs;
+done
+```
+
+```sh
+for i in 2 3 4 5 6 7 8 9 ; do
+   cat 001.pbs | sed -e "s/001/00${i}/" > 00${i}.pbs
+   chmod +x 00${i}.pbs
+   cat trial_001_stdscale_params | sed -e "s/001/00${i}/" > trial_00${i}_params
+done
+```
+
+```sh
+for i in 1 2 3 4 ; do
+   sbatch -o slurm/003_0${i}.out 003_0${i}.pbs 
+done
+
+
+# for i in 1 2 3 4 ; do
+#    git add 003_0${i}.pbs 
+#    git add trial_003_0${i}_params
+# done
+```
+

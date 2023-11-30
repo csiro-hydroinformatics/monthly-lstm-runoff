@@ -1,0 +1,40 @@
+top_out_dir_f=$HOME/tmp/ozdata_hrs_out/
+mkdir -p $top_out_dir_f
+
+tstamp=test_tstamp
+
+model_id=lstm_single
+# model_id=cn_parallel_lstm
+# model_id=lstm_enc_dec
+
+out_dir_f=${top_out_dir_f}/${tstamp}/${model_id}
+mkdir -p ${out_dir_f}
+
+n_epochs=100
+train_start_date=1950-01-01
+train_end_date=1995-12-31
+eval_start_date=1996-01-01
+eval_end_date=2020-07-15
+batch_size=24
+seq_length=6
+num_features=4
+feature_ids="rain pet tmax eff_rain"
+steps_per_epoch=100
+stride=1
+shuffle=true
+lstm_dim=10
+
+logging=false # false (default), tensorboard, wandb
+log_dir=ignored # directory for log output
+use_validation=false # Should there be a training/validation split of the calibration period to prevent model overfitting. Was investigated when suspecting overfitting, but it may actually have been a red herring. 
+
+early_stopping=false
+early_stopping_patience=15
+lr_patience=3
+lr_factor=0.5
+lr_start=0.05
+dropout=0.3
+recurrent_dropout=0.3
+
+runoff_scaling_option=minmax
+reproducible_initialisers=false
